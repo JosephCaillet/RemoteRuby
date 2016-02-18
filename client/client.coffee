@@ -1,5 +1,11 @@
+socket = undefined
+
 RR_Main = ->
 	console.log "jQuerry loaded"
+	socket = io.connect 'http://localhost:8080'
+	RR_BindEventListener()
+	socket.on 'stdout', (output) ->
+		RR_AppendText output
 
 RR_LoadJQuerry = () ->
 	headTag = document.getElementsByTagName("head")[0]
@@ -14,3 +20,26 @@ if typeof jQuery == 'undefined'
 	RR_LoadJQuerry()
 else
 	$(RR_Main)
+
+RR_AppendText = (txt) ->
+	old = $('.RR_Stdout').html()
+	$('.RR_Stdout').html(old + '<p>' + txt + '</p>')
+	$('.RR_Stdin').val("")
+
+RR_BindEventListener = ->
+	$('.RR_RunButton').click RR_RunEvent
+	$('.RR_StopButton').click RR_StopEvent
+	$('.RR_Stdin').keydown (e) ->
+		if e.keyCode == 13
+			RR_StdinEvent()
+			RR_AppendText $('.RR_Stdin').val()
+
+
+RR_RunEvent = ->
+	socket.emit 'run', $('.RR_RubyCode').text()
+
+RR_StopEvent = ->
+	socket.emit 'stop'
+
+RR_StdinEvent = ->
+	socket.emit 'stdin', $('.RR_Stdin').val()

@@ -3,20 +3,31 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Remote Ruby</title>
-
+	<script src="http://localhost:8080/socket.io/socket.io.js"></script>
 	<script type="text/javascript" src="client.js"></script>
 </head>
 <body>
 	<h1>Remote Ruby</h1>
-	<code contenteditable="true" class="RR_RubyCode">
-		puts "Hello World !"
-	</code>
+
+	<pre>
+		<code contenteditable="true" class="RR_RubyCode">
+puts "Hello World !"
+a = [1,2,3]
+a.each do |nb|
+	puts nb*2
+end
+		</code>
+	</pre>
 	<br>
+
 	<button type="button" class="RR_RunButton">Run</button>
+	<button type="button" class="RR_StopButton">Stop</button>
 	<br>
-	<div class="RR_stdout">
+
+	<div class="RR_Stdout">
 		<p>Output :</p>
 	</div>
-	<input type="text" class="RR_stdin">
+
+	<input type="text" class="RR_Stdin">
 </body>
 </html>

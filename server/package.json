@@ -1,0 +1,21 @@
+{
+  "name": "RemoteRuby",
+  "version": "0.0.1",
+  "description": "RemoteRuby run ruby code received from a browser, end send back the ouput of this code.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PCYoshi/RemoteRuby"
+  },
+  "author": "Joseph Caillet",
+  "license": "The MIT License",
+  "bugs": {
+    "url": "https://github.com/PCYoshi/RemoteRuby/issues"
+  },
+  "dependencies": {
+    "socket.io": "~1.4.5"
+  }
+}
