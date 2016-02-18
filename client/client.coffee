@@ -8,8 +8,8 @@ RR_Main = ->
 		RR_AppendText output
 	socket.on 'stderr', (output) ->
 		RR_AppendText output
-	socket.on 'terminated', ->
-		RR_AppendText 'Terminated'
+	socket.on 'terminated', (message) ->
+		RR_AppendText message
 
 RR_LoadJQuerry = () ->
 	headTag = document.getElementsByTagName("head")[0]
@@ -27,7 +27,7 @@ else
 
 RR_AppendText = (txt) ->
 	old = $('.RR_Stdout').html()
-	$('.RR_Stdout').html(old + '<div>' + txt + '</div>')
+	$('.RR_Stdout').html(old + txt + '\n')
 	$('.RR_Stdin').val("")
 
 RR_BindEventListener = ->
@@ -37,6 +37,8 @@ RR_BindEventListener = ->
 		if e.keyCode == 13
 			RR_StdinEvent()
 			RR_AppendText $('.RR_Stdin').val()
+	$('.RR_ClearButton').click ->
+		$('.RR_Stdout').html('')
 
 RR_RunEvent = ->
 	socket.emit 'run', $('.RR_RubyCode').text()

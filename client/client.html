@@ -11,22 +11,21 @@
 
 	<pre>
 		<code contenteditable="true" class="RR_RubyCode">
-puts "Hello World !"
-a = [1,2,3]
-a.each do |nb|
-	puts nb*2
-end
+STDOUT.sync = true
+puts "Your name ?"
+name = gets
+puts "Hello #{name}"
 		</code>
 	</pre>
 	<br>
 
 	<button type="button" class="RR_RunButton">Run</button>
 	<button type="button" class="RR_StopButton">Stop</button>
+	<button type="button" class="RR_ClearButton">Clear</button>
 	<br>
 
-	<div class="RR_Stdout">
-		<p>Output :</p>
-	</div>
+	<p>Output :</p>
+	<pre class="RR_Stdout"></pre>
 
 	<input type="text" class="RR_Stdin">
 </body>

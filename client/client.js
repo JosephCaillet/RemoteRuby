@@ -14,8 +14,8 @@
     socket.on('stderr', function(output) {
       return RR_AppendText(output);
     });
-    return socket.on('terminated', function() {
-      return RR_AppendText('Terminated');
+    return socket.on('terminated', function(message) {
+      return RR_AppendText(message);
     });
   };
 
@@ -40,18 +40,21 @@
   RR_AppendText = function(txt) {
     var old;
     old = $('.RR_Stdout').html();
-    $('.RR_Stdout').html(old + '<div>' + txt + '</div>');
+    $('.RR_Stdout').html(old + txt + '\n');
     return $('.RR_Stdin').val("");
   };
 
   RR_BindEventListener = function() {
     $('.RR_RunButton').click(RR_RunEvent);
     $('.RR_StopButton').click(RR_StopEvent);
-    return $('.RR_Stdin').keydown(function(e) {
+    $('.RR_Stdin').keydown(function(e) {
       if (e.keyCode === 13) {
         RR_StdinEvent();
         return RR_AppendText($('.RR_Stdin').val());
       }
+    });
+    return $('.RR_ClearButton').click(function() {
+      return $('.RR_Stdout').html('');
     });
   };
 
