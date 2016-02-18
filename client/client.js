@@ -8,8 +8,14 @@
     console.log("jQuerry loaded");
     socket = io.connect('http://localhost:8080');
     RR_BindEventListener();
-    return socket.on('stdout', function(output) {
+    socket.on('stdout', function(output) {
       return RR_AppendText(output);
+    });
+    socket.on('stderr', function(output) {
+      return RR_AppendText(output);
+    });
+    return socket.on('terminated', function() {
+      return RR_AppendText('Terminated');
     });
   };
 
@@ -34,7 +40,7 @@
   RR_AppendText = function(txt) {
     var old;
     old = $('.RR_Stdout').html();
-    $('.RR_Stdout').html(old + '<p>' + txt + '</p>');
+    $('.RR_Stdout').html(old + '<div>' + txt + '</div>');
     return $('.RR_Stdin').val("");
   };
 

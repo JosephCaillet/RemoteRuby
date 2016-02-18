@@ -1,18 +1,21 @@
 http = require 'http'
 io = require 'socket.io'
+Ruby = require './RubyCodeLauncher'
 
 server = http.createServer()
 io = io.listen server
 
+ruby = new Ruby
+
 io.sockets.on 'connection', (socket) ->
+	ruby.setSocket socket
 	socket.on 'run', (code) ->
-		console.log 'Code to execute is : \n' + code
+		ruby.start code
 
 	socket.on 'stop', ->
-		console.log 'Stop execution code asked'
-		socket.emit 'stdout', 'taaaaaaaataaaaaa yoyoooooooooooooooo'
+		ruby.stop()
 
 	socket.on 'stdin', (input) ->
-		console.log 'input is : ' + input
+		ruby.stdin input
 
 server.listen 8080
