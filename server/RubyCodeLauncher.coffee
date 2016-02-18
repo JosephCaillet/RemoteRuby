@@ -1,6 +1,7 @@
 spawn = require('child_process').spawn
 
 class RubyCodeLauncher
+	#represent the ruby process, undefined means iti is not running.
 	ruby: undefined
 
 	setSocket : (@socket) ->
