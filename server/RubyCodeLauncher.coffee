@@ -12,7 +12,6 @@ class RubyCodeLauncher
 
 		@ruby.stdout.on 'data', (data) =>
 			@socket.emit 'stdout', data.toString()
-			console.log data.toString()
 
 		@ruby.stderr.on 'data', (data) =>
 			@socket.emit 'stderr', data
@@ -24,15 +23,10 @@ class RubyCodeLauncher
 				msg = "Terminated with code : " + code
 			@socket.emit 'terminated', msg
 
-		console.log 'Code to execute is : ' + code
-
 	stop: ->
-		console.log 'Stop execution code asked'
 		@ruby.kill() if @isRubyRunning()
 
-
 	stdin: (input) ->
-		console.log 'input is : ' + input
 		if @isRubyRunning()
 			@ruby.stdin.write input
 			@ruby.stdin.end()

@@ -21,13 +21,12 @@
       }
       this.ruby = spawn('ruby', ['-e', code]);
       this.ruby.stdout.on('data', function(data) {
-        _this.socket.emit('stdout', data.toString());
-        return console.log(data.toString());
+        return _this.socket.emit('stdout', data.toString());
       });
       this.ruby.stderr.on('data', function(data) {
         return _this.socket.emit('stderr', data);
       });
-      this.ruby.on('close', function(code) {
+      return this.ruby.on('close', function(code) {
         var msg;
         if (code === null) {
           msg = "Ruby script killed";
@@ -36,18 +35,15 @@
         }
         return _this.socket.emit('terminated', msg);
       });
-      return console.log('Code to execute is : ' + code);
     };
 
     RubyCodeLauncher.prototype.stop = function() {
-      console.log('Stop execution code asked');
       if (this.isRubyRunning()) {
         return this.ruby.kill();
       }
     };
 
     RubyCodeLauncher.prototype.stdin = function(input) {
-      console.log('input is : ' + input);
       if (this.isRubyRunning()) {
         this.ruby.stdin.write(input);
         return this.ruby.stdin.end();

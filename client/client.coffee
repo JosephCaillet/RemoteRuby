@@ -9,7 +9,7 @@ RR_Main = ->
 	socket.on 'stderr', (output) ->
 		RR_AppendText output
 	socket.on 'terminated', (message) ->
-		RR_AppendText message
+		RR_AppendText message, true
 
 RR_LoadJQuerry = () ->
 	headTag = document.getElementsByTagName("head")[0]
@@ -25,9 +25,10 @@ if typeof jQuery == 'undefined'
 else
 	$(RR_Main)
 
-RR_AppendText = (txt) ->
-	old = $('.RR_Stdout').html()
-	$('.RR_Stdout').html(old + txt + '\n')
+RR_AppendText = (txt, newline) ->
+	msg = $('.RR_Stdout').html() + txt
+	msg += '\n' if newline == true
+	$('.RR_Stdout').html(msg)
 	$('.RR_Stdin').val("")
 
 RR_BindEventListener = ->
@@ -36,7 +37,7 @@ RR_BindEventListener = ->
 	$('.RR_Stdin').keydown (e) ->
 		if e.keyCode == 13
 			RR_StdinEvent()
-			RR_AppendText $('.RR_Stdin').val()
+			RR_AppendText $('.RR_Stdin').val(), true
 	$('.RR_ClearButton').click ->
 		$('.RR_Stdout').html('')
 

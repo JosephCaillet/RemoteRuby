@@ -15,7 +15,7 @@
       return RR_AppendText(output);
     });
     return socket.on('terminated', function(message) {
-      return RR_AppendText(message);
+      return RR_AppendText(message, true);
     });
   };
 
@@ -37,10 +37,13 @@
     $(RR_Main);
   }
 
-  RR_AppendText = function(txt) {
-    var old;
-    old = $('.RR_Stdout').html();
-    $('.RR_Stdout').html(old + txt + '\n');
+  RR_AppendText = function(txt, newline) {
+    var msg;
+    msg = $('.RR_Stdout').html() + txt;
+    if (newline === true) {
+      msg += '\n';
+    }
+    $('.RR_Stdout').html(msg);
     return $('.RR_Stdin').val("");
   };
 
@@ -50,7 +53,7 @@
     $('.RR_Stdin').keydown(function(e) {
       if (e.keyCode === 13) {
         RR_StdinEvent();
-        return RR_AppendText($('.RR_Stdin').val());
+        return RR_AppendText($('.RR_Stdin').val(), true);
       }
     });
     return $('.RR_ClearButton').click(function() {
