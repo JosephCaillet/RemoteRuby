@@ -33,20 +33,21 @@
         } else {
           msg = "Terminated with code : " + code;
         }
-        return _this.socket.emit('terminated', msg);
+        _this.socket.emit('terminated', msg);
+        return _this.ruby = void 0;
       });
     };
 
     RubyCodeLauncher.prototype.stop = function() {
       if (this.isRubyRunning()) {
-        return this.ruby.kill();
+        this.ruby.kill();
+        return this.ruby = void 0;
       }
     };
 
     RubyCodeLauncher.prototype.stdin = function(input) {
       if (this.isRubyRunning()) {
-        this.ruby.stdin.write(input);
-        return this.ruby.stdin.end();
+        return this.ruby.stdin.write(input + '\n');
       }
     };
 

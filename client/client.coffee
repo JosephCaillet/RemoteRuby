@@ -1,4 +1,5 @@
 socket = undefined
+prefix = '.present ' #the class that represent current slide
 
 RR_Main = ->
 	console.log "jQuerry loaded"
@@ -26,10 +27,10 @@ else
 	$(RR_Main)
 
 RR_AppendText = (txt, newline) ->
-	msg = $('.RR_Stdout').html() + txt
+	msg = $(prefix + '.RR_Stdout').html() + txt
 	msg += '\n' if newline == true
-	$('.RR_Stdout').html(msg)
-	$('.RR_Stdin').val("")
+	$(prefix + '.RR_Stdout').html(msg)
+	$(prefix + '.RR_Stdin').val("")
 
 RR_BindEventListener = ->
 	$('.RR_RunButton').click RR_RunEvent
@@ -37,15 +38,15 @@ RR_BindEventListener = ->
 	$('.RR_Stdin').keydown (e) ->
 		if e.keyCode == 13
 			RR_StdinEvent()
-			RR_AppendText $('.RR_Stdin').val(), true
+			RR_AppendText $(prefix + '.RR_Stdin').val(), true
 	$('.RR_ClearButton').click ->
-		$('.RR_Stdout').html('')
+		$(prefix + '.RR_Stdout').html('')
 
 RR_RunEvent = ->
-	socket.emit 'run', $('.RR_RubyCode').text()
+	socket.emit 'run', $(prefix + '.RR_RubyCode').text()
 
 RR_StopEvent = ->
 	socket.emit 'stop'
 
 RR_StdinEvent = ->
-	socket.emit 'stdin', $('.RR_Stdin').val()
+	socket.emit 'stdin', $(prefix + '.RR_Stdin').val()

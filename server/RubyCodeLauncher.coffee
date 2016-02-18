@@ -22,14 +22,16 @@ class RubyCodeLauncher
 			else
 				msg = "Terminated with code : " + code
 			@socket.emit 'terminated', msg
+			@ruby = undefined
 
 	stop: ->
-		@ruby.kill() if @isRubyRunning()
+		if @isRubyRunning()
+			@ruby.kill()
+			@ruby = undefined
 
 	stdin: (input) ->
 		if @isRubyRunning()
-			@ruby.stdin.write input
-			@ruby.stdin.end()
+			@ruby.stdin.write input + '\n'
 
 	isRubyRunning: ->
 		return @ruby?
