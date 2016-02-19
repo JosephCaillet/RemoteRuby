@@ -10,12 +10,13 @@ class RubyCodeLauncher
 		@stop() if @isRubyRunning()
 
 		@ruby = spawn 'ruby', ['-e', code]
+		console.log code
 
 		@ruby.stdout.on 'data', (data) =>
 			@socket.emit 'stdout', data.toString()
 
 		@ruby.stderr.on 'data', (data) =>
-			@socket.emit 'stderr', data
+			@socket.emit 'stderr', data.toString()
 
 		@ruby.on 'close', (code) =>
 			if code == null
@@ -33,6 +34,8 @@ class RubyCodeLauncher
 	stdin: (input) ->
 		if @isRubyRunning()
 			@ruby.stdin.write input + '\n'
+			@socket.emit 'approvedInput', input
+			console.log input
 
 	isRubyRunning: ->
 		return @ruby?

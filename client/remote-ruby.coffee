@@ -9,24 +9,27 @@ RR_Main = ->
 
 #Add button, stdin and stdout zone
 RR_SetupInteractionZone = ->
-	interactionZone = '<div class="RR_InteractionZone">
+	interactionZoneBegin = '<div class="RR_InteractionZone">
 			<button class="RR_RunButton">Run</button>
 			<button class="RR_StopButton">Stop</button>
 			<button class="RR_ClearButton">Clear</button>
 
-			<p>Output :</p>
-			<pre class="RR_Stdout"></pre>
+			<pre class="RR_Stdout"></pre>'
 
-			<input type="text" class="RR_Stdin">
-		</div>'
-	$('.RR_RubyCode').parent().after(interactionZone)
+	interactionZoneStdinButton = '<input type="text" class="RR_Stdin" placeholder="Input goes here">'
+	interactionZoneEnd = '</div>'
+
+	$('.RR_RubyCode').each ->
+		if $(this).hasClass("RR_FullIO")
+			$(this).parent().after(interactionZoneBegin + interactionZoneStdinButton + interactionZoneEnd)
+		else
+			$(this).parent().after(interactionZoneBegin + interactionZoneEnd)
 
 #Add text in the output zone
 RR_AppendText = (txt, newline) ->
 	msg = $(prefix + '.RR_Stdout').html() + txt
 	msg += '\n' if newline == true
 	$(prefix + '.RR_Stdout').html(msg)
-	$(prefix + '.RR_Stdin').val("")
 
 #Bind event listener for client and server event
 RR_BindEventListener = ->
@@ -36,7 +39,6 @@ RR_BindEventListener = ->
 	$('.RR_Stdin').keydown (e) ->
 		if e.keyCode == 13
 			RR_StdinEvent()
-			RR_AppendText $(prefix + '.RR_Stdin').val(), true
 	$('.RR_ClearButton').click ->
 		$(prefix + '.RR_Stdout').html('')
 	#Events from server
@@ -46,6 +48,9 @@ RR_BindEventListener = ->
 		RR_AppendText output
 	socket.on 'terminated', (message) ->
 		RR_AppendText message, true
+	socket.on 'approvedInput', (input) ->
+		$(prefix + '.RR_Stdin').val("")
+		RR_AppendText input, true
 
 #Ask server to run a ruby code
 RR_RunEvent = ->

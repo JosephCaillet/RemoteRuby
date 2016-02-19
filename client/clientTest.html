@@ -4,14 +4,14 @@
 	<meta charset="UTF-8">
 	<title>Remote Ruby</title>
 	<script src="http://localhost:8080/socket.io/socket.io.js"></script>
-	<script type="text/javascript" src="client.js"></script>
+	<script type="text/javascript" src="remote-ruby.js"></script>
 </head>
 <body>
 	<section class="present">
 		<h1>Remote Ruby 1</h1>
 
 		<pre>
-			<code contenteditable="true" class="RR_RubyCode">
+			<code contenteditable="true" class="RR_RubyCode RR_FullIO">
 STDOUT.sync = true
 puts "Your name ?"
 name = gets
@@ -20,7 +20,7 @@ puts "Hello #{name}"
 		</pre>
 	</section>
 	<section>
-		<h1>Remote Ruby 1</h1>
+		<h1>Remote Ruby 2</h1>
 
 		<pre>
 			<code contenteditable="true" class="RR_RubyCode">

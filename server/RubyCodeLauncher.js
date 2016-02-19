@@ -20,11 +20,12 @@
         this.stop();
       }
       this.ruby = spawn('ruby', ['-e', code]);
+      console.log(code);
       this.ruby.stdout.on('data', function(data) {
         return _this.socket.emit('stdout', data.toString());
       });
       this.ruby.stderr.on('data', function(data) {
-        return _this.socket.emit('stderr', data);
+        return _this.socket.emit('stderr', data.toString());
       });
       return this.ruby.on('close', function(code) {
         var msg;
@@ -47,7 +48,9 @@
 
     RubyCodeLauncher.prototype.stdin = function(input) {
       if (this.isRubyRunning()) {
-        return this.ruby.stdin.write(input + '\n');
+        this.ruby.stdin.write(input + '\n');
+        this.socket.emit('approvedInput', input);
+        return console.log(input);
       }
     };
 

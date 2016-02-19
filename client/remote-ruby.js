@@ -13,18 +13,22 @@
   };
 
   RR_SetupInteractionZone = function() {
-    var interactionZone;
-    interactionZone = '<div class="RR_InteractionZone">\
+    var interactionZoneBegin, interactionZoneEnd, interactionZoneStdinButton;
+    interactionZoneBegin = '<div class="RR_InteractionZone">\
 			<button class="RR_RunButton">Run</button>\
 			<button class="RR_StopButton">Stop</button>\
 			<button class="RR_ClearButton">Clear</button>\
 \
-			<p>Output :</p>\
-			<pre class="RR_Stdout"></pre>\
-\
-			<input type="text" class="RR_Stdin">\
-		</div>';
-    return $('.RR_RubyCode').parent().after(interactionZone);
+			<pre class="RR_Stdout"></pre>';
+    interactionZoneStdinButton = '<input type="text" class="RR_Stdin" placeholder="Input goes here">';
+    interactionZoneEnd = '</div>';
+    return $('.RR_RubyCode').each(function() {
+      if ($(this).hasClass("RR_FullIO")) {
+        return $(this).parent().after(interactionZoneBegin + interactionZoneStdinButton + interactionZoneEnd);
+      } else {
+        return $(this).parent().after(interactionZoneBegin + interactionZoneEnd);
+      }
+    });
   };
 
   RR_AppendText = function(txt, newline) {
@@ -33,8 +37,7 @@
     if (newline === true) {
       msg += '\n';
     }
-    $(prefix + '.RR_Stdout').html(msg);
-    return $(prefix + '.RR_Stdin').val("");
+    return $(prefix + '.RR_Stdout').html(msg);
   };
 
   RR_BindEventListener = function() {
@@ -42,8 +45,7 @@
     $('.RR_StopButton').click(RR_StopEvent);
     $('.RR_Stdin').keydown(function(e) {
       if (e.keyCode === 13) {
-        RR_StdinEvent();
-        return RR_AppendText($(prefix + '.RR_Stdin').val(), true);
+        return RR_StdinEvent();
       }
     });
     $('.RR_ClearButton').click(function() {
@@ -55,8 +57,12 @@
     socket.on('stderr', function(output) {
       return RR_AppendText(output);
     });
-    return socket.on('terminated', function(message) {
+    socket.on('terminated', function(message) {
       return RR_AppendText(message, true);
+    });
+    return socket.on('approvedInput', function(input) {
+      $(prefix + '.RR_Stdin').val("");
+      return RR_AppendText(input, true);
     });
   };
 
