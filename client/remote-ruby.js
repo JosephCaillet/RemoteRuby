@@ -67,7 +67,21 @@
   };
 
   RR_RunEvent = function() {
-    return socket.emit('run', $(prefix + '.RR_RubyCode').text());
+    /*
+    	highlight.js is pretty cool, but it behave in a strange way when you try to edit code element,
+        because it does not add newline character, which is very annoying for the ruby interpreter...
+        that's why we change every div created by highlight.js with a div containing a br element,
+        and we replace all br element with the newline character. This may create too much new line characters,
+        but it's not a big problem. It's the only solution I have found, if you know an other let me know ;)
+    */
+
+    var newContent, rubyCodeCloneElement, rubyCodeHtml;
+    rubyCodeHtml = $(prefix + '.RR_RubyCode').html();
+    rubyCodeCloneElement = $('<div>').html(rubyCodeHtml);
+    newContent = rubyCodeCloneElement.html().replace(/<div>/mg, "<div><br>").replace(/<br\s*\/?>/mg, "\n");
+    rubyCodeCloneElement.html(newContent);
+    console.log(rubyCodeCloneElement.text());
+    return socket.emit('run', rubyCodeCloneElement.text());
   };
 
   RR_StopEvent = function() {
