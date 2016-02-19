@@ -56,6 +56,7 @@ puts "Hello World !"
 </section>
 ```
 Tip : add the class "ruby" to inform highlight.js that you are coding in ruby.
+
 This html code will be transformed like this:
 ```html
 <section class="present" style="top: 162.5px; display: block;">
@@ -104,3 +105,4 @@ puts "Hello #{name} ! :)"
      <input type="text" class="RR_Stdin" placeholder="Input goes here"></div>
 </section>
 ```
+Notice that on the first line of our ruby script, there is the instruction `STDOUT.sync = true`. It's here to ask ruby to do not use buffered output. If outputs are buffered, your ruby script can be awaiting input, without you knowing it, because the text that ask you something is still in the buffer!
