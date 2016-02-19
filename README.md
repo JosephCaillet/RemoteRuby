@@ -13,8 +13,8 @@ How to Use
 Server configuration
 --------------------
 * On your machine, go into `server/` folder
-* Run `npm install`
-* Start the server `node remote-ruby-server.js`
+* Run: `npm install`
+* Start the server: `node remote-ruby-server.js`
 
 Client Configuration
 --------------------
@@ -38,8 +38,10 @@ Reveal.initialize({
         { src: 'plugin/zoom-js/zoom.js', async: true },
         { src: 'plugin/notes/notes.js', async: true },
         //Here are Remote Ruby dependencies : socket.io, whis is provided by the nodejs server, and the file copied earlier.
+        ////////////////////////////////////////
         { src: 'http://localhost:8080/socket.io/socket.io.js', async: true, condition: function() { return !!document.querySelector( '.RR_RubyCode' ); } },
         { src: 'plugin/remote-ruby/remote-ruby.js', async: true, condition: function() { return !!document.querySelector( '.RR_RubyCode' );} }
+        ////////////////////////////////////////
     ]
 });
 ```
