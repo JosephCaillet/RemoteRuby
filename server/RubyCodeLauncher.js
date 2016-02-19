@@ -20,7 +20,6 @@
         this.stop();
       }
       this.ruby = spawn('ruby', ['-e', code]);
-      console.log(code);
       this.ruby.stdout.on('data', function(data) {
         return _this.socket.emit('stdout', data.toString());
       });
@@ -49,8 +48,7 @@
     RubyCodeLauncher.prototype.stdin = function(input) {
       if (this.isRubyRunning()) {
         this.ruby.stdin.write(input + '\n');
-        this.socket.emit('approvedInput', input);
-        return console.log(input);
+        return this.socket.emit('approvedInput', input);
       }
     };
 
