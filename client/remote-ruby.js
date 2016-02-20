@@ -8,6 +8,7 @@
 
   RR_Main = function() {
     socket = io.connect('http://localhost:8080');
+    $('head').append('<link rel="stylesheet" href="plugin/remote-ruby/remote-ruby.css" type="text/css" />');
     RR_SetupInteractionZone();
     return RR_BindEventListener();
   };
@@ -32,12 +33,14 @@
   };
 
   RR_AppendText = function(txt, newline) {
-    var msg;
+    var msg, stdout;
     msg = $(prefix + '.RR_Stdout').html() + txt;
     if (newline === true) {
       msg += '\n';
     }
-    return $(prefix + '.RR_Stdout').html(msg);
+    stdout = $(prefix + '.RR_Stdout');
+    stdout.html(msg);
+    return stdout.scrollTop(stdout.prop("scrollHeight"));
   };
 
   RR_BindEventListener = function() {
@@ -80,8 +83,7 @@
     rubyCodeCloneElement = $('<div>').html(rubyCodeHtml);
     newContent = rubyCodeCloneElement.html().replace(/<div>/mg, "<div><br>").replace(/<br\s*\/?>/mg, "\n");
     rubyCodeCloneElement.html(newContent);
-    console.log(rubyCodeCloneElement.text());
-    return socket.emit('run', rubyCodeCloneElement.text());
+    return socket.emit('run', $(prefix + '.RR_HiddenRubyCode').text() + rubyCodeCloneElement.text());
   };
 
   RR_StopEvent = function() {

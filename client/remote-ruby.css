@@ -1,0 +1,50 @@
+.RR_RubyCode
+{
+	max-height: 7em;
+	overflow: auto;
+}
+
+.RR_HiddenRubyCode
+{
+	visibility: hidden;
+}
+
+.RR_InteractionZone
+{
+
+}
+
+.RR_RunButton, .RR_StopButton, .RR_ClearButton
+{
+	border: solid 2px white;
+	margin: 0.1em 0.5em;
+	padding: 0.1em 1em;
+	font-family: Verdana;
+	font-size: 50%;
+}
+
+.RR_RunButton
+{
+	background-color: #2ecc71;
+}
+
+.RR_StopButton
+{
+	background-color: #e74c3c;
+}
+
+.RR_ClearButton
+{
+	background-color: #95a5a6;
+}
+
+.RR_Stdout
+{
+	max-height: 7em;
+	overflow: auto;
+}
+
+.RR_Stdin
+{
+	width: 20em;
+}

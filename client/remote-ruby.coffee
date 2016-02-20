@@ -4,6 +4,7 @@ prefix = '.present ' #the class that represent current slide
 #Main function
 RR_Main = ->
 	socket = io.connect 'http://localhost:8080'
+	$('head').append('<link rel="stylesheet" href="plugin/remote-ruby/remote-ruby.css" type="text/css" />');
 	RR_SetupInteractionZone()
 	RR_BindEventListener()
 
@@ -29,7 +30,9 @@ RR_SetupInteractionZone = ->
 RR_AppendText = (txt, newline) ->
 	msg = $(prefix + '.RR_Stdout').html() + txt
 	msg += '\n' if newline == true
-	$(prefix + '.RR_Stdout').html(msg)
+	stdout = $(prefix + '.RR_Stdout')
+	stdout.html(msg)
+	stdout.scrollTop(stdout.prop("scrollHeight"));
 
 #Bind event listener for client and server event
 RR_BindEventListener = ->
@@ -65,8 +68,7 @@ RR_RunEvent = ->
 	rubyCodeCloneElement = $('<div>').html( rubyCodeHtml )
 	newContent = rubyCodeCloneElement.html().replace(/<div>/mg,"<div><br>").replace(/<br\s*\/?>/mg,"\n")
 	rubyCodeCloneElement.html newContent
-	console.log rubyCodeCloneElement.text()
-	socket.emit 'run', rubyCodeCloneElement.text()
+	socket.emit 'run', $(prefix + '.RR_HiddenRubyCode').text() + rubyCodeCloneElement.text()
 
 #Ask server to stop current ruby script execution
 RR_StopEvent = ->

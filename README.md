@@ -19,6 +19,7 @@ Server configuration
 Client Configuration
 --------------------
 * Copy `client/remote-ruby.js` into `plugin/remote-ruby/remote-ruby.js`
+* Copy `client/remote-ruby.css` into `plugin/remote-ruby/remote-ruby.css`
 * Add dependencies :
 ```javascript
 Reveal.initialize({
@@ -59,7 +60,7 @@ Tip : add the class "ruby" to inform highlight.js that you are coding in ruby.
 
 This html code will be transformed like this:
 ```html
-<section class="present" style="top: 162.5px; display: block;">
+<section>
     <h2>Ruby demo n°1</h2>
     <h3>Simple output...</h3>
     <pre><code class="hljs ruby RR_RubyCode" data-trim="" contenteditable="">
@@ -88,7 +89,7 @@ puts "Hello #{name} ! :)"
 ```
 This html code will be transformed like this:
 ```html
-<section class="present" style="top: 159.5px; display: block;">
+<section>
     <h2>Ruby demo n°2</h2>
     <h3>Using inputs...</h3>
     <pre><code class="hljs ruby RR_RubyCode RR_FullIO" data-trim="" contenteditable="">
@@ -106,7 +107,25 @@ puts "Hello #{name} ! :)"
 </section>
 ```
 Notice that on the first line of our ruby script, there is the instruction `STDOUT.sync = true`. It's here to ask ruby to do not use buffered output. If outputs are buffered, your ruby script can be awaiting input, without you knowing it, because the text that ask you something is still in the buffer!
-
+* You can hide a portion of code like this:
+```html
+<section>
+    <h2>Ruby demo n°2</h2>
+    <h3>Using inputs...</h3>
+    <pre class="RR_HiddenRubyCode"><code>
+STDOUT.sync = true
+    </code></pre>
+    <pre><code class=" hljs ruby RR_RubyCode RR_FullIO" data-trim contenteditable>
+puts "What is your name ?"
+name = gets.chomp
+puts "Hello #{name} ! :)"
+    </code></pre>
+</section>
+```
+The code with `RR_HiddenRubyCode` class will be sent just before the code with the `RR_RubyCode` class.
+Editing CSS
+===========
+You can edit the file `plugin/remote-ruby/remote-ruby.css`.
 Known issues
 ============
 If you try to edit your ruby code , and wants to run it : if you inserted blanck new lines, they may be duplicated, and if there is an error in your code, the line number of the error given by the ruby interpreter may be wrong.
