@@ -1,12 +1,11 @@
 .RR_RubyCode
 {
-	max-height: 7em;
 	overflow: auto;
 }
 
 .RR_HiddenRubyCode
 {
-	visibility: hidden;
+	display: none !important;
 }
 
 .RR_InteractionZone
