@@ -106,3 +106,8 @@ puts "Hello #{name} ! :)"
 </section>
 ```
 Notice that on the first line of our ruby script, there is the instruction `STDOUT.sync = true`. It's here to ask ruby to do not use buffered output. If outputs are buffered, your ruby script can be awaiting input, without you knowing it, because the text that ask you something is still in the buffer!
+
+Known issues
+============
+If you try to edit your ruby code , and wants to run it : if you inserted blanck new lines, they may be duplicated, and if there is an error in your code, the line number of the error given by the ruby interpreter may be wrong.
+This problem comes from a workaround that acts against a problem of highlight.js plugin, which stores the new line caracter in a strange way.
