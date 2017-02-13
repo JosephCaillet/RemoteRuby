@@ -104,7 +104,7 @@
     return headTag.appendChild(jqTag);
   };
 
-  if (jQuery === void 0) {
+  if (typeof jQuery === 'undefined') {
     RR_LoadJQuerry();
   } else {
     $(RR_Main);

@@ -91,7 +91,7 @@ RR_LoadJQuerry = ->
 	headTag.appendChild jqTag
 
 #Load jQuerry if needed, or call main function.
-if jQuery == undefined
+if typeof jQuery == 'undefined'
 	RR_LoadJQuerry()
 else
 	$(RR_Main)
