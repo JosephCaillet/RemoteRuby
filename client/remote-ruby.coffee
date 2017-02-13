@@ -67,7 +67,7 @@ RR_RunEvent = ->
 	rubyCodeHtml = $(prefix + '>' + prefix + '.RR_RubyCode').html()
 	if rubyCodeHtml == undefined
 		rubyCodeHtml = $(prefix + '.RR_RubyCode').html()
-	console.log(rubyCodeHtml)
+
 	rubyCodeCloneElement = $('<div>').html( rubyCodeHtml )
 	newContent = rubyCodeCloneElement.html().replace(/<div>/mg,"<div><br>").replace(/<br\s*\/?>/mg,"\n")
 	rubyCodeCloneElement.html newContent
@@ -91,7 +91,7 @@ RR_LoadJQuerry = ->
 	headTag.appendChild jqTag
 
 #Load jQuerry if needed, or call main function.
-if typeof jQuery == 'undefined'
+if jQuery == undefined
 	RR_LoadJQuerry()
 else
 	$(RR_Main)

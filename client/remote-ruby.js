@@ -78,7 +78,6 @@
     if (rubyCodeHtml === void 0) {
       rubyCodeHtml = $(prefix + '.RR_RubyCode').html();
     }
-    console.log(rubyCodeHtml);
     rubyCodeCloneElement = $('<div>').html(rubyCodeHtml);
     newContent = rubyCodeCloneElement.html().replace(/<div>/mg, "<div><br>").replace(/<br\s*\/?>/mg, "\n");
     rubyCodeCloneElement.html(newContent);
@@ -105,7 +104,7 @@
     return headTag.appendChild(jqTag);
   };
 
-  if (typeof jQuery === 'undefined') {
+  if (jQuery === void 0) {
     RR_LoadJQuerry();
   } else {
     $(RR_Main);
