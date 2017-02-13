@@ -3,8 +3,8 @@ prefix = '.present ' #the class that represent current slide
 
 #Main function
 RR_Main = ->
-	socket = io.connect 'http://localhost:8080'
 	$('head').append('<link rel="stylesheet" href="plugin/remote-ruby/remote-ruby.css" type="text/css" />');
+	socket = io.connect 'http://localhost:8080'
 	RR_SetupInteractionZone()
 	RR_BindEventListener()
 
@@ -64,7 +64,10 @@ RR_RunEvent = ->
     and we replace all br element with the newline character. This may create too much new line characters,
     but it's not a big problem. It's the only solution I have found, if you know an other let me know ;)
     ###
-	rubyCodeHtml = $(prefix + '.RR_RubyCode').html()
+	rubyCodeHtml = $(prefix + '>' + prefix + '.RR_RubyCode').html()
+	if rubyCodeHtml == undefined
+		rubyCodeHtml = $(prefix + '.RR_RubyCode').html()
+	console.log(rubyCodeHtml)
 	rubyCodeCloneElement = $('<div>').html( rubyCodeHtml )
 	newContent = rubyCodeCloneElement.html().replace(/<div>/mg,"<div><br>").replace(/<br\s*\/?>/mg,"\n")
 	rubyCodeCloneElement.html newContent

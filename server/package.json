@@ -1,7 +1,7 @@
 {
   "name": "RemoteRuby",
   "version": "1.0.0",
-  "description": "RemoteRuby run ruby code received from a browser, end send back the ouput of this code.",
+  "description": "RemoteRuby runs ruby code received from a browser, end send back the ouput of this code.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
