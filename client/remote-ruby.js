@@ -56,7 +56,8 @@
       return RR_AppendText(output);
     });
     socket.on('terminated', function(message) {
-      return RR_AppendText(message, true);
+      RR_AppendText(message, true);
+      return document.activeElement.blur();
     });
     return socket.on('approvedInput', function(input) {
       $(prefix + '.RR_Stdin').val("");

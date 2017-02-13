@@ -51,6 +51,7 @@ RR_BindEventListener = ->
 		RR_AppendText output
 	socket.on 'terminated', (message) ->
 		RR_AppendText message, true
+		document.activeElement.blur();
 	socket.on 'approvedInput', (input) ->
 		$(prefix + '.RR_Stdin').val("")
 		RR_AppendText input, true
