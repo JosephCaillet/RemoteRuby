@@ -29,26 +29,10 @@
 
   RR_GetCurrentSlide = function(selector) {
     if ($('.stack' + prefix + '>' + prefix).html() !== void 0) {
-      console.log("sub: " + selector);
       return $('.stack' + '>' + prefix + selector);
     } else {
-      console.log("non: " + selector);
       return $(prefix + selector);
     }
-
-    /*
-    	currentSlide = $('.stack' + '>' + prefix + selector)
-    	#console.log("2:"+prefix + '>' + prefix + selector)
-    	if currentSlide.html() == undefined
-    		currentSlide = $(prefix + selector)
-    		console.log("non: " + selector)
-    	else
-    		console.log("sub: " + selector)
-    
-    	#console.log(currentSlide)
-    	console.log("------")
-    	return currentSlide
-     */
   };
 
   RR_AppendText = function(txt, newline) {
@@ -97,13 +81,6 @@
        that's why we change every div created by highlight.js with a div containing a br element,
        and we replace all br element with the newline character. This may create too much new line characters,
        but it's not a big problem. It's the only solution I have found, if you know an other let me know ;)
-     */
-
-    /*
-    	console.log("1:"+ prefix + '>' + prefix + '.RR_RubyCode')
-    	rubyCodeHtml = $(prefix + '>' + prefix + '.RR_RubyCode').html()
-    	if rubyCodeHtml == undefined
-    		rubyCodeHtml = $(prefix + '.RR_RubyCode').html()
      */
     var newContent, rubyCodeCloneElement, rubyCodeHtml;
     rubyCodeHtml = RR_GetCurrentSlide('.RR_RubyCode').html();
