@@ -10,7 +10,7 @@
 
 .RR_InteractionZone
 {
-
+	margin-top: -0.68em !important;
 }
 
 .RR_RunButton, .RR_StopButton, .RR_ClearButton
@@ -42,9 +42,13 @@
 {
 	max-height: 7em;
 	overflow: auto;
+	padding: 0 !important;
+	margin-top: 0.5em !important;
+	margin-bottom: 0 !important;
 }
 
 .RR_Stdin
 {
 	width: 20em;
+	padding: 0 !important;
 }
