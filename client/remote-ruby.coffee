@@ -26,11 +26,36 @@ RR_SetupInteractionZone = ->
 		else
 			$(this).parent().after(interactionZoneBegin + interactionZoneEnd)
 
+#Get current slide
+RR_GetCurrentSlide = (selector) ->
+	if $('.stack'+prefix + '>' + prefix).html() != undefined
+		console.log("sub: " + selector)
+		return $('.stack' + '>' + prefix + selector)
+	else
+		console.log("non: " + selector)
+		return $(prefix + selector)
+
+	###
+	currentSlide = $('.stack' + '>' + prefix + selector)
+	#console.log("2:"+prefix + '>' + prefix + selector)
+	if currentSlide.html() == undefined
+		currentSlide = $(prefix + selector)
+		console.log("non: " + selector)
+	else
+		console.log("sub: " + selector)
+
+	#console.log(currentSlide)
+	console.log("------")
+	return currentSlide
+    ###
+
 #Add text in the output zone
 RR_AppendText = (txt, newline) ->
-	msg = $(prefix + '.RR_Stdout').html() + txt
+	msg = RR_GetCurrentSlide('.RR_Stdout').html() + txt
+	#msg = $(prefix + '.RR_Stdout').html() + txt
 	msg += '\n' if newline == true
-	stdout = $(prefix + '.RR_Stdout')
+	#stdout = $(prefix + '.RR_Stdout')
+	stdout = RR_GetCurrentSlide('.RR_Stdout')
 	stdout.html(msg)
 	stdout.scrollTop(stdout.prop("scrollHeight"));
 
@@ -43,7 +68,8 @@ RR_BindEventListener = ->
 		if e.keyCode == 13
 			RR_StdinEvent()
 	$('.RR_ClearButton').click ->
-		$(prefix + '.RR_Stdout').html('')
+		#$(prefix + '.RR_Stdout').html('')
+		RR_GetCurrentSlide('.RR_Stdout').html('')
 	#Events from server
 	socket.on 'stdout', (output) ->
 		RR_AppendText output
@@ -53,7 +79,8 @@ RR_BindEventListener = ->
 		RR_AppendText message, true
 		document.activeElement.blur();
 	socket.on 'approvedInput', (input) ->
-		$(prefix + '.RR_Stdin').val("")
+		#$(prefix + '.RR_Stdin').val("")
+		RR_GetCurrentSlide('.RR_Stdin').val("")
 		RR_AppendText input, true
 
 #Ask server to run a ruby code
@@ -64,22 +91,30 @@ RR_RunEvent = ->
     that's why we change every div created by highlight.js with a div containing a br element,
     and we replace all br element with the newline character. This may create too much new line characters,
     but it's not a big problem. It's the only solution I have found, if you know an other let me know ;)
-    ###
+	###
+
+	###
+	console.log("1:"+ prefix + '>' + prefix + '.RR_RubyCode')
 	rubyCodeHtml = $(prefix + '>' + prefix + '.RR_RubyCode').html()
 	if rubyCodeHtml == undefined
 		rubyCodeHtml = $(prefix + '.RR_RubyCode').html()
+	###
 
+	rubyCodeHtml = RR_GetCurrentSlide('.RR_RubyCode').html()
+	#console.log(rubyCodeHtml)
 	rubyCodeCloneElement = $('<div>').html( rubyCodeHtml )
 	newContent = rubyCodeCloneElement.html().replace(/<div>/mg,"<div><br>").replace(/<br\s*\/?>/mg,"\n")
 	rubyCodeCloneElement.html newContent
-	socket.emit 'run', $(prefix + '.RR_HiddenRubyCode').text() + rubyCodeCloneElement.text()
+	#socket.emit 'run', $(prefix + '.RR_HiddenRubyCode').text() + rubyCodeCloneElement.text()
+	socket.emit 'run', RR_GetCurrentSlide('.RR_HiddenRubyCode').text() + rubyCodeCloneElement.text()
 
 #Ask server to stop current ruby script execution
 RR_StopEvent = ->
 	socket.emit 'stop'
 #Send latest input to stdin or the current ruby script
 RR_StdinEvent = ->
-	socket.emit 'stdin', $(prefix + '.RR_Stdin').val()
+	#socket.emit 'stdin', $(prefix + '.RR_Stdin').val()
+	socket.emit 'stdin', RR_GetCurrentSlide('.RR_Stdin').val()
 
 #Load jquery and call main function.
 RR_LoadJQuerry = ->

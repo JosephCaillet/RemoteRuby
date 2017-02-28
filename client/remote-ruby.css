@@ -18,8 +18,9 @@
 	border: solid 2px white;
 	margin: 0.1em 0.5em;
 	padding: 0.1em 1em;
-	font-family: Verdana;
+	font-family: Helvetica;
 	font-size: 50%;
+	color: black;
 }
 
 .RR_RunButton
