@@ -44,6 +44,10 @@ Reveal.initialize({
         ////////////////////////////////////////
     ]
 });
+
+Usage
+-----
+
 ```
 * Add the class "RR_RubyCode" to your code element (Notice that your code element must be in a pre element !) :
 ```html
@@ -122,9 +126,12 @@ puts "Hello #{name} ! :)"
 </section>
 ```
 The code with `RR_HiddenRubyCode` class will be sent just before the code with the `RR_RubyCode` class.
+If you want to alway send the sale block of code (`STDOUT.sync = true` for instance), you can set it in the `remote-ruby-server` file. By default, it is set to:  `codeAlwaysExecuted = "STDOUT.sync = true"`.
+
 Editing CSS
 ===========
 You can edit the file `plugin/remote-ruby/remote-ruby.css`.
+
 Known issues
 ============
 If you try to edit your ruby code , and wants to run it : if you inserted blanck new lines, they may be duplicated, and if there is an error in your code, the line number of the error given by the ruby interpreter may be wrong.
