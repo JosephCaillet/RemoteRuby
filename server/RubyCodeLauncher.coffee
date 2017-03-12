@@ -19,9 +19,9 @@ class RubyCodeLauncher
 
 		@ruby.on 'close', (code) =>
 			if code == null
-				msg = "Ruby script killed"
+				msg = "Ruby script killed\n"
 			else
-				msg = "Terminated with code : " + code
+				msg = "Terminated with code : " + code + "\n"
 			@socket.emit 'terminated', msg
 			@ruby = undefined
 
